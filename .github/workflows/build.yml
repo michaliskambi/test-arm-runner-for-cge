@@ -77,7 +77,7 @@ jobs:
 
             # # install prerequisites
             sudo apt-get update
-            sudo apt-get --no-install-recommends -y install libgl-dev fpc
+            sudo apt-get --no-install-recommends -y install libgl-dev fpc git git-lfs
 
             # get and build Castle Game Engine
             export CASTLE_ENGINE_PATH=`pwd`/castle-engine
