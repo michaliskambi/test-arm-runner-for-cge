@@ -62,7 +62,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: pguyot/arm-runner-action@v2
+      - uses: pguyot/arm-runner-action@HEAD
         with:
           shell: /bin/bash -eo pipefail
           commands: |
