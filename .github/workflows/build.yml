@@ -78,25 +78,26 @@ jobs:
       - uses: actions/checkout@v4
       - uses: pguyot/arm-runner-action@v2
         with:
-          shell: /bin/bash -eo pipefail
+          #shell: /bin/bash -eo pipefail
+          shell: /bin/bash
           commands: |
             # show system info
             uname -a
             lsb_release -a
 
-            # install prerequisites
-            sudo apt update
-            sudo apt-get --no-install-recommends -y install libgl-dev fpc
+            # # install prerequisites
+            # sudo apt-get update
+            # sudo apt-get --no-install-recommends -y install libgl-dev fpc
 
-            # get and build Castle Game Engine
-            export CASTLE_ENGINE_PATH=`pwd`/castle-engine
-            export PATH=$PATH:$CASTLE_ENGINE_PATH/tools/build-tool/
-            git clone --depth 1 --single-branch --branch snapshot https://github.com/castle-engine/castle-engine/
-            ./tools/build-tool/castle-engine_compile.sh
+            # # get and build Castle Game Engine
+            # export CASTLE_ENGINE_PATH=`pwd`/castle-engine
+            # export PATH=$PATH:$CASTLE_ENGINE_PATH/tools/build-tool/
+            # git clone --depth 1 --single-branch --branch snapshot https://github.com/castle-engine/castle-engine/
+            # ./tools/build-tool/castle-engine_compile.sh
 
-            # build the project
-            cd test_project_for_rpi/
-            castle-engine package
+            # # build the project
+            # cd test_project_for_rpi/
+            # castle-engine package
           #copy_artifact_path: "test_project_for_rpi/*.tar.gz"
 
   #     - name: Archive Artifacts
