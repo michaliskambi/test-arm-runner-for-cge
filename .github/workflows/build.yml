@@ -57,13 +57,28 @@ jobs:
 
   # Build for Raspberry Pi 32-bit.
   # TODO: test 64-bit too, following matrix on https://github.com/marketplace/actions/arm-runner
-  build-macos:
+
+  build-rpi-minimal:
+    name: Build for Raspberry Pi 32-bit minimal
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pguyot/arm-runner-action@v2
+        with:
+          shell: /bin/bash
+          commands: |
+            echo "Minimal"
+            test `uname -m` = 'armv6l'
+          copy_artifact_path: "test_project_for_rpi/*.tar.gz"
+
+  build-rpi:
     name: Build for Raspberry Pi 32-bit
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - uses: pguyot/arm-runner-action@v2
         with:
+          # TODO: OK to customize with pipefail?
           #shell: /bin/bash -eo pipefail
           shell: /bin/bash
           commands: |
