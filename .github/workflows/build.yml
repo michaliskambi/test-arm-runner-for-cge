@@ -71,7 +71,7 @@ jobs:
             test `uname -m` = 'armv6l'
           copy_artifact_path: "test_project_for_rpi/*.tar.gz"
 
-  build-rpi:
+  build-rpi32:
     name: Build for Raspberry Pi 32-bit
     runs-on: ubuntu-latest
     steps:
@@ -111,7 +111,7 @@ jobs:
     name: Release
     runs-on: ubuntu-latest
     # Only upload release if all builds, on all runners, succeeded.
-    needs: [build-using-docker, build-macos]
+    needs: [build-using-docker, build-rpi32]
     steps:
     - name: Download packaged releases
       uses: actions/download-artifact@v4
