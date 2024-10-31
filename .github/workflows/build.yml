@@ -83,7 +83,9 @@ jobs:
             export CASTLE_ENGINE_PATH=`pwd`/castle-engine
             export PATH=$PATH:$CASTLE_ENGINE_PATH/tools/build-tool/
             git clone --depth 1 --single-branch --branch snapshot https://github.com/castle-engine/castle-engine/
+            cd castle-engine/
             ./tools/build-tool/castle-engine_compile.sh
+            cd ../
 
             # build the project
             cd test_project_for_rpi/
