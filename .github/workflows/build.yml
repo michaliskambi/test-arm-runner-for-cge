@@ -58,7 +58,7 @@ jobs:
   # Build for Raspberry Pi 32-bit.
   # TODO: test 64-bit too, following matrix on https://github.com/marketplace/actions/arm-runner
 
-  build-rpi-minimal:
+  build-rpi32-minimal:
     name: Build for Raspberry Pi 32-bit minimal
     runs-on: ubuntu-latest
     steps:
@@ -71,35 +71,34 @@ jobs:
             test `uname -m` = 'armv6l'
           #copy_artifact_path: "test_project_for_rpi/*.tar.gz"
 
-  # build-rpi32:
-  #   name: Build for Raspberry Pi 32-bit
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - uses: actions/checkout@v4
-  #     - uses: pguyot/arm-runner-action@v2
-  #       with:
-  #         # TODO: OK to customize with pipefail?
-  #         #shell: /bin/bash -eo pipefail
-  #         shell: /bin/bash
-  #         commands: |
-  #           # show system info
-  #           uname -a
-  #           lsb_release -a
+  build-rpi32:
+    name: Build for Raspberry Pi 32-bit
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pguyot/arm-runner-action@v2
+        with:
+          shell: /bin/bash -eo pipefail
+          commands: |
+            # show system info
+            uname -a
+            lsb_release -a
 
-  #           # install prerequisites
-  #           sudo apt update
-  #           sudo apt-get --no-install-recommends -y install libgl-dev fpc
+            # install prerequisites
+            sudo apt update
+            sudo apt-get --no-install-recommends -y install libgl-dev fpc
 
-  #           # get and build Castle Game Engine
-  #           export CASTLE_ENGINE_PATH=`pwd`/castle-engine
-  #           export PATH=$PATH:$CASTLE_ENGINE_PATH/tools/build-tool/
-  #           git clone --depth 1 --single-branch --branch snapshot https://github.com/castle-engine/castle-engine/
-  #           ./tools/build-tool/castle-engine_compile.sh
+            # get and build Castle Game Engine
+            export CASTLE_ENGINE_PATH=`pwd`/castle-engine
+            export PATH=$PATH:$CASTLE_ENGINE_PATH/tools/build-tool/
+            git clone --depth 1 --single-branch --branch snapshot https://github.com/castle-engine/castle-engine/
+            ./tools/build-tool/castle-engine_compile.sh
 
-  #           # build the project
-  #           cd test_project_for_rpi/
-  #           castle-engine package
-  #         copy_artifact_path: "test_project_for_rpi/*.tar.gz"
+            # build the project
+            cd test_project_for_rpi/
+            castle-engine package
+          #copy_artifact_path: "test_project_for_rpi/*.tar.gz"
+
   #     - name: Archive Artifacts
   #       uses: actions/upload-artifact@v4
   #       with:
