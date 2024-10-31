@@ -84,7 +84,40 @@ jobs:
         with:
           base_image: ${{ matrix.base_image }}
           cpu: ${{ matrix.cpu }}
-          cpu_info: ${{ matrix.cpu_info }}
+
+          # Hm, I could not get this to work.
+          #
+          # - With cpuinfo/ prefix:
+          #   ( as examples on
+          #   https://github.com/pguyot/wm8960/blob/master/.github/workflows/arm-runner.yml
+          #   https://github.com/nabaztag2018/pynab/blob/master/.github/workflows/arm-runner.yml
+          #   )
+          #
+          #   mount: /home/actions/temp/arm-runner/mnt/proc/cpuinfo: special device /home/runner/work/_actions/pguyot/arm-runner-action/v2/cpuinfo/raspberrypi_zero2_w_arm64_w does not exist.
+          #   Error: Process completed with exit code 32.
+          #   Run sudo umount /home/actions/temp/arm-runner/mnt/proc/cpuinfo
+          #   umount: /home/actions/temp/arm-runner/mnt/proc/cpuinfo: not mounted.
+          #   Error: Process completed with exit code 32.
+          #
+          #   https://github.com/michaliskambi/test-arm-runner-for-cge/actions/runs/11618086632/job/32354717610
+          #
+          # - Without cpuinfo/ prefix:
+          #   ( as example at the bottom of https://github.com/pguyot/arm-runner-action?tab=readme-ov-file )
+          #
+          #   Run if [ -e /home/runner/work/test-arm-runner-for-cge/test-arm-runner-for-cge/raspberrypi_zero2_w_arm64_w ]; then
+          #   mount: /home/actions/temp/arm-runner/mnt/proc/cpuinfo: special device /home/runner/work/_actions/pguyot/arm-runner-action/v2/raspberrypi_zero2_w_arm64_w does not exist.
+          #   Error: Process completed with exit code 32.
+          #   Run sudo umount /home/actions/temp/arm-runner/mnt/proc/cpuinfo
+          #   umount: /home/actions/temp/arm-runner/mnt/proc/cpuinfo: not mounted.
+          #   Error: Process completed with exit code 32.
+          #
+          #   https://github.com/michaliskambi/test-arm-runner-for-cge/actions/runs/11616247104/job/32348736420
+          #
+          # However, https://github.com/pguyot/arm-runner-action?tab=readme-ov-file
+          # says it's not necessary:
+          # qemu 8.2 and higher do intercept /proc/cpuinfo to report something related to the passed cpu option. So if you are running ubuntu-24.04 or if you install your own version of qemu-user-arm/aarch64, this option will be effectless.
+          #cpu_info: ${{ matrix.cpu_info }}
+
           shell: /bin/bash -eo pipefail
           image_additional_mb: 4000
           commands: |
