@@ -66,7 +66,7 @@ jobs:
       - uses: pguyot/arm-runner-action@v2
         with:
           shell: /bin/bash -eo pipefail
-          image_additional_mb: 1000
+          image_additional_mb: 2000
           commands: |
             # useful string to grep logs, because log of script execution is somewhat buried in the middle of pguyot/arm-runner-action log
             echo 'CGE script starts here'
