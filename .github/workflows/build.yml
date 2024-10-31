@@ -79,15 +79,15 @@ jobs:
             sudo apt-get update
             sudo apt-get --no-install-recommends -y install libgl-dev fpc
 
-            # # get and build Castle Game Engine
-            # export CASTLE_ENGINE_PATH=`pwd`/castle-engine
-            # export PATH=$PATH:$CASTLE_ENGINE_PATH/tools/build-tool/
-            # git clone --depth 1 --single-branch --branch snapshot https://github.com/castle-engine/castle-engine/
-            # ./tools/build-tool/castle-engine_compile.sh
+            # get and build Castle Game Engine
+            export CASTLE_ENGINE_PATH=`pwd`/castle-engine
+            export PATH=$PATH:$CASTLE_ENGINE_PATH/tools/build-tool/
+            git clone --depth 1 --single-branch --branch snapshot https://github.com/castle-engine/castle-engine/
+            ./tools/build-tool/castle-engine_compile.sh
 
-            # # build the project
-            # cd test_project_for_rpi/
-            # castle-engine package
+            # build the project
+            cd test_project_for_rpi/
+            castle-engine package
           #copy_artifact_path: "test_project_for_rpi/*.tar.gz"
 
   #     - name: Archive Artifacts
