@@ -127,6 +127,7 @@ jobs:
             # show system info
             uname -a
             lsb_release -a
+            cat /proc/cpuinfo
 
             # # install prerequisites
             sudo apt-get update
