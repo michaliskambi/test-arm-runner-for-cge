@@ -69,7 +69,7 @@ jobs:
           commands: |
             echo "Minimal"
             test `uname -m` = 'armv6l'
-          copy_artifact_path: "test_project_for_rpi/*.tar.gz"
+          #copy_artifact_path: "test_project_for_rpi/*.tar.gz"
 
   # build-rpi32:
   #   name: Build for Raspberry Pi 32-bit
