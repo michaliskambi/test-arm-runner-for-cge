@@ -1,0 +1,23 @@
+# Based on
+# https://github.com/pguyot/arm-runner-action/blob/main/.github/workflows/test-minimal.yml
+# Simplest test that the action works.
+
+name: Test minimal configuration of arm-runner action.
+
+on:
+  pull_request:
+  push:
+    branches:
+      - '**'
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - uses: pguyot/arm-runner-action@HEAD
+      with:
+        commands: |
+            echo "Minimal"
+            test `uname -m` = 'armv6l'
