@@ -119,7 +119,9 @@ jobs:
           #cpu_info: ${{ matrix.cpu_info }}
 
           shell: /bin/bash -eo pipefail
-          image_additional_mb: 4000
+          image_additional_mb: 4096
+          # Avoids the need for copy_artifact_path later.
+          bind_mount_repository: true
           commands: |
             # useful string to grep logs, because log of script execution is somewhat buried in the middle of pguyot/arm-runner-action log
             echo 'CGE script starts here'
@@ -144,13 +146,12 @@ jobs:
             # build the project
             cd test_project_for_rpi/
             castle-engine package
-          copy_artifact_path: "test_project_for_rpi/*.tar.gz"
 
       - name: Archive Artifacts
         uses: actions/upload-artifact@v4
         with:
           name: raspberry-pi-${{ matrix.arch }}-build
-          path: "*-tar.gz"
+          path: "test_project_for_rpi/*.tar.gz"
           if-no-files-found: error
 
   release:
