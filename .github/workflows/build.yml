@@ -68,11 +68,17 @@ jobs:
         include:
         - arch: armv6l
           cpu: arm1176
-          base_image: raspios_lite:latest
+          #base_image: raspios_lite:latest
+          # will fail as image for 64? TODO check
+          #base_image: raspi_4_bullseye:20230102
+          base_image: raspi_2_bullseye:20230102
           cpu_info: cpuinfo/raspberrypi_zero_w
         - arch: armv7l
           cpu: cortex-a7
-          base_image: raspios_lite:latest
+          #base_image: raspios_lite:latest
+          # will fail as image for 64? TODO check
+          #base_image: raspi_4_bullseye:20230102
+          base_image: raspi_2_bullseye:20230102
           cpu_info: cpuinfo/raspberrypi_3b
         - arch: aarch64
           cpu: cortex-a53
@@ -130,6 +136,7 @@ jobs:
             uname -a
             lsb_release -a
             cat /proc/cpuinfo
+            dpkg -l libc-bin
 
             # # install prerequisites
             sudo apt-get update
