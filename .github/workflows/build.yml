@@ -93,10 +93,10 @@ jobs:
         - arch: armv7l
           cpu: cortex-a7
 
-          # See above for comments about base_image.
-          #base_image: raspios_lite:latest
+          # dietpi:rpi_armv7_bullseye is not available anymore, https://github.com/pguyot/arm-runner-action/issues/126
+          #base_image: dietpi:rpi_armv7_bullseye
           #base_image: raspi_2_bullseye:20230102
-          base_image: dietpi:rpi_armv7_bullseye
+          base_image: raspios_lite:latest
 
           cpu_info: cpuinfo/raspberrypi_3b
         - arch: aarch64
