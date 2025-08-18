@@ -60,49 +60,26 @@ jobs:
     name: Build for Raspberry Pi (Linux/Arm)
     runs-on: ubuntu-latest
     # matrix to build on various Raspberry Pi models from https://github.com/marketplace/actions/arm-runner
-    # TODO: Do we need both armv6l, armv7l?
-    # We really want the one for Raspberry Pi 4 and 5, 32-bits.
     strategy:
       matrix:
-        arch: [armv6l, armv7l, aarch64]
+        arch: [armv7l, aarch64]
         include:
-        - arch: armv6l
-          cpu: arm1176
-
-          # Do not use -- this is bookworm, binaries compiled here cannot be
-          # run on bullseye, due to being linked with newer glibc.
-          # Trying to run them on bullseye results in error:
-          #
-          #   /lib/arm-linux-gnueabihf/libc.so.6: version `GLIBC_2.34' not found (required by ./test_project_for_rpi)
-          #
-          # And we want to support bullseye at least for 32-bit Raspberry Pi,
-          # e.g. Mythic Beats hosting has it.
-          #base_image: raspios_lite:latest
-
-          # Do not use -- Fails with
-          #   qemu: uncaught target signal 11 (Segmentation fault) - core dumped
-          # Refs: https://github.com/michaliskambi/test-arm-runner-for-cge/actions/runs/11667398393/job/32484616647
-          #base_image: raspi_2_bullseye:20230102
-
-          # Use dietpi images, following
-          # https://github.com/pguyot/wm8960/blob/master/.github/workflows/arm-runner.yml
-          # https://github.com/nabaztag2018/pynab/blob/master/.github/workflows/arm-runner.yml
-          base_image: dietpi:rpi_armv6_bullseye
-
-          cpu_info: cpuinfo/raspberrypi_zero_w
+        # Raspberry Pi 32-bit (Arm), latest
         - arch: armv7l
           cpu: cortex-a7
-
-          # dietpi:rpi_armv7_bullseye is not available anymore, https://github.com/pguyot/arm-runner-action/issues/126
+          # In the past we tried to use bullseye (older version, used on Raspberry Pi 4 by default).
+          # But this no longer works, as
+          # https://dietpi.com/downloads/images/DietPi_RPi-ARMv7-Bullseye.img.xz
+          # is not available.
+          # https://dietpi.com/#downloadinfo for RPi points to bookworm.
           #base_image: dietpi:rpi_armv7_bullseye
-          #base_image: raspi_2_bullseye:20230102
           base_image: raspios_lite:latest
-
           cpu_info: cpuinfo/raspberrypi_3b
+        # Raspberry Pi 64-bit (Aarch64), latest (bookworm)
         - arch: aarch64
           cpu: cortex-a53
           base_image: raspios_lite_arm64:latest
-          cpu_info: cpuinfo/raspberrypi_zero2_w_arm64_w
+          cpu_info: cpuinfo/raspberrypi_zero2_w_arm64_w    
     steps:
       - uses: actions/checkout@v5
       - uses: pguyot/arm-runner-action@v2
