@@ -27,7 +27,7 @@ jobs:
     runs-on: ubuntu-latest
     container: kambi/castle-engine-cloud-builds-tools:cge-unstable
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
 
       - name: Package Windows
         run: |
@@ -81,7 +81,7 @@ jobs:
           base_image: raspios_lite_arm64:latest
           cpu_info: cpuinfo/raspberrypi_zero2_w_arm64_w    
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
       - uses: pguyot/arm-runner-action@v2
         with:
           base_image: ${{ matrix.base_image }}
@@ -185,7 +185,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: [release]
     steps:
-    - uses: actions/checkout@v5
+    - uses: actions/checkout@v6
     - name: Update Release Tag
       if: ${{ github.ref == 'refs/heads/master' }}
       run: |
