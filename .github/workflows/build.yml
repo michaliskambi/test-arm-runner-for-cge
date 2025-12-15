@@ -35,7 +35,7 @@ jobs:
           castle-engine package --os=win64 --cpu=x86_64 --verbose
       - name: Archive Artifacts
         # See https://github.com/actions/upload-artifact
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v6
         with:
           name: windows-build
           # Note: Keep paths that start with asterisk in double qoutes, to avoid misinterpreting as YAML reference.
@@ -49,7 +49,7 @@ jobs:
           cd test_project_for_rpi/
           castle-engine package --os=linux --cpu=x86_64 --verbose
       - name: Archive Artifacts
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v6
         with:
           name: linux-build
           path: "test_project_for_rpi/*-linux-x86_64.tar.gz"
@@ -151,7 +151,7 @@ jobs:
             castle-engine package
 
       - name: Archive Artifacts
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v6
         with:
           name: raspberry-pi-${{ matrix.arch }}-build
           path: "test_project_for_rpi/*.tar.gz"
