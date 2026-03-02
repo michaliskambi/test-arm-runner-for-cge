@@ -79,7 +79,7 @@ jobs:
         - arch: aarch64
           cpu: cortex-a53
           base_image: raspios_lite_arm64:latest
-          cpu_info: cpuinfo/raspberrypi_zero2_w_arm64_w    
+          cpu_info: cpuinfo/raspberrypi_zero2_w_arm64_w
     steps:
       - uses: actions/checkout@v6
       - uses: pguyot/arm-runner-action@v2
@@ -136,15 +136,17 @@ jobs:
 
             # # install prerequisites
             sudo apt-get update
-            sudo apt-get --no-install-recommends -y install libgl-dev fpc git git-lfs
+            sudo apt-get --no-install-recommends -y install libgl-dev git git-lfs
 
             # get and build Castle Game Engine
-            export CASTLE_ENGINE_PATH=`pwd`/castle-engine
-            export PATH=$PATH:$CASTLE_ENGINE_PATH/tools/build-tool/
-            git clone --depth 1 --single-branch --branch snapshot https://github.com/castle-engine/castle-engine/
-            cd castle-engine/
-            ./tools/build-tool/castle-engine_compile.sh
-            cd ../
+            # Install FPC and CGE
+            pushd /tmp/
+            git clone https://github.com/castle-engine/castle-build-ci.git \
+              --depth=1 --single-branch --branch=master
+            castle-build-ci/install_dependencies
+            castle-build-ci/setup_castle_engine
+            source setup_castle_engine_env.sh
+            popd
 
             # build the project
             cd test_project_for_rpi/
